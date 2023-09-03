@@ -2,4 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
- 
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.125);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-pop {
+  animation: scaleAnimation 0.075s forwards;
+}
