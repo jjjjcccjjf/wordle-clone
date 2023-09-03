@@ -19,3 +19,41 @@
 .animate-pop {
   animation: scaleAnimation 0.075s forwards;
 }
+
+@keyframes flipAnimation {
+  0% {
+    transform: perspective(2000px) rotateX(0deg);
+  }
+  50% {
+    transform: perspective(2000px) rotateX(90deg);
+  }
+  
+  100% {
+    transform: perspective(2000px) rotateX(0deg);
+  }
+}
+
+.animate-flip-0 {
+  animation: flipAnimation .8s forwards;
+  animation-delay: 0ms;
+}
+
+.animate-flip-1 {
+  animation: flipAnimation .8s forwards;
+  animation-delay: 250ms;
+}
+
+.animate-flip-2 {
+  animation: flipAnimation .8s forwards;
+  animation-delay: 500ms;
+}
+
+.animate-flip-3 {
+  animation: flipAnimation .8s forwards;
+  animation-delay: 750ms;
+}
+
+.animate-flip-4 {
+  animation: flipAnimation .8s forwards;
+  animation-delay: 1000ms;
+}

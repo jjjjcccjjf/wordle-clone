@@ -58,33 +58,27 @@ const Input = forwardRef(function Input(props, ref) {
         console.log("pressed enter but accepted");
 
         let guessWord = "";
-        Array.from(
-          { length: 5 },
-          (_, index) =>
-            (guessWord += map.get(`cell-${currentRow}-${index}`).value)
-        );
+        Array.from({ length: 5 }, (_, index) => {
+
+          const item = map.get(`cell-${currentRow}-${index}`)
+          guessWord += item.value;
+
+          item.classList.add(`animate-flip-${index}`)
+          setTimeout(() => {
+            item.classList.remove("bg-transparent");
+            item.classList.remove("border-2");
+            item.classList.add('bg-[#538d4e]');
+          }, index * 200 + 400);
+        });
 
         dispatch(setPlayerGuesses(guessWord));
         dispatch(setCurrentRow(currentRow + 1));
-        // console.log(guessWord);
       } else {
         console.log(playerGuesses);
         console.log("pressed enter but rejected");
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (letter.length > 0) {
-  //     localRef.current.classList.add("border-white/40");
-  //     localRef.current.classList.add("animate-pop");
-  //     localRef.current.classList.remove("border-white/20");
-  //   } else if (letter.length === 0) {
-  //     localRef.current.classList.remove("border-white/40");
-  //     localRef.current.classList.remove("animate-pop");
-  //     localRef.current.classList.add("border-white/20");
-  //   }
-  // }, [letter]);
 
   return (
     <input
@@ -143,12 +137,15 @@ export default function Home() {
 
   const handleClick = () => {
     const regexEmpty = generateRegexFocusOnEmpty(currentRow);
-    const regexLast = generateRegexFocusOnLast(currentRow)
+    const regexLast = generateRegexFocusOnLast(currentRow);
     console.log(regexEmpty, regexLast);
-    
+
     if (map) {
       for (const [key, node] of map.entries()) {
-        if ((node && node.value.length === 0 && regexEmpty.test(key)) || (node && node.value.length === 1 && regexLast.test(key))) {
+        if (
+          (node && node.value.length === 0 && regexEmpty.test(key)) ||
+          (node && node.value.length === 1 && regexLast.test(key))
+        ) {
           node.focus();
           break; // Focus the first empty input and stop iterating
         }
