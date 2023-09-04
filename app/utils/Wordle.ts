@@ -1,4 +1,5 @@
-type LetterStatus = "PERFECT" | "HIT" | "MISS";
+import { GameWinStateType, LetterStatus } from "./types";
+
 
 export class Wordle {
   static getCorrectLetterStatus(
@@ -35,5 +36,12 @@ export class Wordle {
       case "MISS":
         return missColor;
     }
+  }
+
+  static getGuessWordResult(guessWord:string, correctWord:string): GameWinStateType {
+    const capsGuessWord = guessWord.toUpperCase();
+    const capsCorrectWord = correctWord.toUpperCase();
+
+    return capsCorrectWord === capsGuessWord ? "WIN": "LOSE";
   }
 }
