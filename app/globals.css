@@ -34,26 +34,26 @@
 }
 
 .animate-flip-0 {
-  animation: flipAnimation .8s forwards;
+  animation: flipAnimation .5s forwards;
   animation-delay: 0ms;
 }
 
 .animate-flip-1 {
-  animation: flipAnimation .8s forwards;
-  animation-delay: 250ms;
+  animation: flipAnimation .5s forwards;
+  animation-delay: 400ms;
 }
 
 .animate-flip-2 {
-  animation: flipAnimation .8s forwards;
-  animation-delay: 500ms;
+  animation: flipAnimation .5s forwards;
+  animation-delay: 800ms;
 }
 
 .animate-flip-3 {
-  animation: flipAnimation .8s forwards;
-  animation-delay: 750ms;
+  animation: flipAnimation .5s forwards;
+  animation-delay: 1200ms;
 }
 
 .animate-flip-4 {
-  animation: flipAnimation .8s forwards;
-  animation-delay: 1000ms;
+  animation: flipAnimation .5s forwards;
+  animation-delay: 1600ms;
 }

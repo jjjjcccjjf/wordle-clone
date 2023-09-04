@@ -5,12 +5,20 @@ import { setCurrentRow, setPlayerGuesses } from "./redux/slices/wordleSlice";
 import "@fontsource/roboto";
 import { RootState } from "./redux/store";
 import { useSelector, useDispatch } from "react-redux";
+import { Wordle } from "./utils/Wordle";
 
-const Input = forwardRef(function Input(props, ref) {
+type InputProps = {
+    row: number,
+    col: number,
+    inputRefs: Map<any,any>
+}
+
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(props, ref) {
   const playerGuesses = useSelector(
     (state: RootState) => state.wordle.playerGuesses
   );
   const currentRow = useSelector((state: RootState) => state.wordle.currentRow);
+  const correctWord = useSelector((state:RootState) => state.wordle.correctWord)
 
   let localRef = useRef();
 
@@ -19,7 +27,7 @@ const Input = forwardRef(function Input(props, ref) {
   const { row, col, inputRefs } = props;
   const map = inputRefs.current;
 
-  function animatePopToggle(node, toggleOn = true) {
+  function animatePopToggle(node: HTMLInputElement, toggleOn = true) {
     if (toggleOn) {
       node.classList.add("border-white/40");
       node.classList.add("animate-pop");
@@ -67,8 +75,11 @@ const Input = forwardRef(function Input(props, ref) {
           setTimeout(() => {
             item.classList.remove("bg-transparent");
             item.classList.remove("border-2");
-            item.classList.add('bg-[#538d4e]');
-          }, index * 200 + 400);
+
+            const status = Wordle.getCorrectLetterStatus(item.value, index, correctWord)
+            const color = Wordle.getColorByLetterStatus(status)
+            item.classList.add(color);
+          }, index * 400 + 200);
         });
 
         dispatch(setPlayerGuesses(guessWord));
@@ -84,7 +95,7 @@ const Input = forwardRef(function Input(props, ref) {
     <input
       value={letter}
       maxLength={1}
-      className="h-14 w-14 border-2 border-white/20 bg-transparent text-center font-[Roboto] text-3xl font-bold uppercase text-white outline-none transition-transform duration-200 caret-transparent"
+      className="h-[62.5px] w-[62px] border-2 border-white/20 bg-transparent text-center font-[Roboto] text-3xl font-bold uppercase text-white outline-none transition-transform duration-200 caret-transparent"
       ref={(node) => {
         if (node) {
           map.set(`cell-${row}-${col}`, node);
@@ -111,7 +122,7 @@ function RowInput(props) {
 
   return (
     <>
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-[5px]">
         {Array.from({ length: 5 }, (_, index) => (
           <Input key={index} inputRefs={inputRefs} col={index} row={row} />
         ))}
@@ -169,7 +180,7 @@ export default function Home() {
   return (
     <>
       <main className="h-screen w-screen bg-black/90 flex items-center justify-center">
-        <section className="grid gap-1">
+        <section className="grid gap-[5px]">
           {Array.from({ length: 6 }, (_, index) => (
             <RowInput key={index} inputRefs={inputRefs} row={index} />
           ))}

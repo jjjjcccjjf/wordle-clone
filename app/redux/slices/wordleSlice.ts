@@ -5,6 +5,7 @@ type WordleState = {
   playerGuesses: Array<string>;
   currentRow: number;
   testWord: string;
+  correctWord: string;
 };
 
 // Define the initial state using that type
@@ -12,6 +13,7 @@ const initialState: WordleState = {
   playerGuesses: [],
   currentRow: 0,
   testWord: "THROE",
+  correctWord: "THROE"
 };
 
 export const wordleSlice = createSlice({
