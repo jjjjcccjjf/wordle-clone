@@ -16,7 +16,7 @@ const initialState: WordleState = {
   playerGuesses: [],
   currentRow: 0,
   testWord: "THROE",
-  correctWord: "FURRY",
+  correctWord: "GNASH",
   gameWinState: null,
   keyboardStatus: {
     Q: "",
@@ -67,10 +67,11 @@ export const wordleSlice = createSlice({
     ) => {
       //fixthis
       const { key, className } = action.payload;
-      // if already green dont change 
-      // if yellow can change to green
-      // if gray can change to any
-      state.keyboardStatus[key] = className;
+      const currStatus = state.keyboardStatus[key]
+      if (className === 'bg-hit' && currStatus === 'bg-perfect') {
+      } else {
+        state.keyboardStatus[key] = className;
+      }
     },
   },
 });

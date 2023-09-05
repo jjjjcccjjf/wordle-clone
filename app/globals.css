@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-key-default {
+  background-color: #818384;
+}
+
+.bg-miss {
+  background-color: #3a3a3c;
+}
+.bg-hit {
+  background-color: #b59f3b;
+}
+.bg-perfect {
+  background-color: #538d4e;
+}
+
 @keyframes scaleAnimation {
   0% {
     transform: scale(1);
@@ -20,10 +34,6 @@
   animation: scaleAnimation 0.075s forwards;
 }
 
-.bg-key-default {
-  background-color: #818384;
-}
-
 @keyframes flipAnimation {
   0% {
     transform: perspective(2000px) rotateX(0deg);
@@ -31,33 +41,33 @@
   50% {
     transform: perspective(2000px) rotateX(90deg);
   }
-  
+
   100% {
     transform: perspective(2000px) rotateX(0deg);
   }
 }
 
 .animate-flip-0 {
-  animation: flipAnimation .5s forwards;
+  animation: flipAnimation 0.5s forwards;
   animation-delay: 0ms;
 }
 
 .animate-flip-1 {
-  animation: flipAnimation .5s forwards;
+  animation: flipAnimation 0.5s forwards;
   animation-delay: 400ms;
 }
 
 .animate-flip-2 {
-  animation: flipAnimation .5s forwards;
+  animation: flipAnimation 0.5s forwards;
   animation-delay: 800ms;
 }
 
 .animate-flip-3 {
-  animation: flipAnimation .5s forwards;
+  animation: flipAnimation 0.5s forwards;
   animation-delay: 1200ms;
 }
 
 .animate-flip-4 {
-  animation: flipAnimation .5s forwards;
+  animation: flipAnimation 0.5s forwards;
   animation-delay: 1600ms;
 }

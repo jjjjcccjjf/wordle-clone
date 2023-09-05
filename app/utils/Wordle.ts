@@ -24,9 +24,9 @@ export class Wordle {
   }
 
   static getColorByLetterStatus(status: LetterStatus): string {
-    const missColor = "bg-[#3a3a3c]";
-    const hitColor = "bg-[#b59f3b]";
-    const perfectColor = "bg-[#538d4e]";
+    const missColor = "bg-miss";
+    const hitColor = "bg-hit";
+    const perfectColor = "bg-perfect";
 
     switch (status) {
       case "PERFECT":

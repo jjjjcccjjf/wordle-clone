@@ -12,6 +12,7 @@ import { RootState } from "./redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { Wordle } from "./utils/Wordle";
 import VirtualKeyboard from "./components/VirtualKeyboard";
+import clsx from "clsx";
 
 type InputProps = {
   row: number;
@@ -19,7 +20,7 @@ type InputProps = {
   inputRefs: Map<any, any>;
 };
 
-function Input(props :InputProps)  {
+function Input(props: InputProps) {
   const playerGuesses = useSelector(
     (state: RootState) => state.wordle.playerGuesses
   );
@@ -56,7 +57,7 @@ function Input(props :InputProps)  {
       animatePopToggle(thisCell, false);
     }
     setLetter(e.target.value);
-    
+
     if (nextCell) {
       nextCell.focus();
     }
@@ -82,7 +83,7 @@ function Input(props :InputProps)  {
 
           item.classList.add(`animate-flip-${index}`);
           const status = Wordle.getCorrectLetterStatus(
-          item.value,
+            item.value,
             index,
             correctWord
           );
@@ -90,14 +91,20 @@ function Input(props :InputProps)  {
           setTimeout(() => {
             item.classList.remove("bg-transparent");
             item.classList.remove("border-2");
-            
+
             item.classList.add(color);
           }, index * 400 + 200);
 
-          setTimeout(()=> {
-            dispatch(setSingleLetterKeyboardStatus({key: item.value.toUpperCase(), className: color}))
+          // add condition for double letters ??? if u kno u kno
 
-          }, 4* 400 + 400)
+          setTimeout(() => {
+            dispatch(
+              setSingleLetterKeyboardStatus({
+                key: item.value.toUpperCase(),
+                className: color,
+              })
+            ); // FIX THIS LATER. SHOULD UPPERCASE ALWAYS
+          }, 4 * 400 + 400);
         });
 
         const gameWinState = Wordle.getGuessWordResult(guessWord, correctWord);
@@ -171,19 +178,46 @@ function RowInput(props) {
 ////////////////////////////
 ////////////////////////////
 
+function GameControls() {
+  return (
+    <aside className="absolute top-7 right-4 flex gap-2">
+      <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
+        Try again
+      </button>
+      <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
+        New word
+      </button>
+      <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
+        Share
+      </button>
+    </aside>
+  );
+}
+
 function GameController() {
+  const gameWinState = useSelector(
+    (state: RootState) => state.wordle.gameWinState
+  );
+
+  const classes = clsx(
+    "h-screen w-screen top-0 left-0 bg-black/50 flex items-center justify-center",
+    "WIN" === gameWinState && "absolute",
+    !gameWinState && "hidden"
+  );
+
+  useEffect(() => {}, [gameWinState]);
+
   return (
     <>
-      <aside className="absolute top-7 right-4 flex gap-2">
-        <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">Try again</button>
-        <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">New word</button>
-        <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">Share</button>
+      <GameControls />
+      <aside className={classes}>
+        <div className="w-1/2 text-4xl h-60 text-white font-bold bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center">
+          <p>YOU WIN</p>
+        </div>
       </aside>
     </>
   );
 }
-
-
 
 ////////////////////////////
 ////////////////////////////
@@ -194,6 +228,7 @@ function GameController() {
 
 export default function Home() {
   const inputRefs = useRef(new Map());
+  const mainRef = useRef();
   const currentRow = useSelector((state: RootState) => state.wordle.currentRow);
   const gameWinState = useSelector(
     (state: RootState) => state.wordle.gameWinState
@@ -224,10 +259,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClick);
+    mainRef.current.addEventListener("click", handleClick);
 
     return () => {
-      document.removeEventListener("click", handleClick);
+      mainRef.current.removeEventListener("click", handleClick);
     };
   }, [currentRow]);
 
@@ -240,15 +275,18 @@ export default function Home() {
 
   return (
     <>
-      <main className="h-screen w-screen bg-black/90 flex flex-col items-center justify-center gap-10 ">
+      <main
+        className="h-screen w-screen bg-black/90 flex flex-col items-center justify-center gap-10 "
+        ref={mainRef}
+      >
         <section className="grid gap-[5px]">
           {Array.from({ length: 6 }, (_, index) => (
             <RowInput key={index} inputRefs={inputRefs} row={index} />
           ))}
         </section>
-        <VirtualKeyboard inputRefs={inputRefs}/>
+        <VirtualKeyboard inputRefs={inputRefs} />
       </main>
-      <GameController/>
+      <GameController />
     </>
   );
 }
