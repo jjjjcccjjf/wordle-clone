@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { GameWinStateType } from "@/app/utils/types";
+import type { GameWinStateType, KeyboardStatusType } from "@/app/utils/types";
 
 type WordleState = {
   playerGuesses: Array<string>;
@@ -8,6 +8,7 @@ type WordleState = {
   testWord: string;
   correctWord: string;
   gameWinState: GameWinStateType;
+  keyboardStatus: KeyboardStatusType;
 };
 
 // Define the initial state using that type
@@ -15,8 +16,36 @@ const initialState: WordleState = {
   playerGuesses: [],
   currentRow: 0,
   testWord: "THROE",
-  correctWord: "THROE",
+  correctWord: "FURRY",
   gameWinState: null,
+  keyboardStatus: {
+    Q: "",
+    W: "",
+    E: "",
+    R: "",
+    T: "",
+    Y: "",
+    U: "",
+    I: "",
+    O: "",
+    P: "",
+    A: "",
+    S: "",
+    D: "",
+    F: "",
+    G: "",
+    H: "",
+    J: "",
+    K: "",
+    L: "",
+    Z: "",
+    X: "",
+    C: "",
+    V: "",
+    B: "",
+    N: "",
+    M: "",
+  },
 };
 
 export const wordleSlice = createSlice({
@@ -32,10 +61,26 @@ export const wordleSlice = createSlice({
     setGameWinState: (state, action: PayloadAction<GameWinStateType>) => {
       state.gameWinState = action.payload;
     },
+    setSingleLetterKeyboardStatus: (
+      state,
+      action: PayloadAction<{ key: string; className: string }>
+    ) => {
+      //fixthis
+      const { key, className } = action.payload;
+      // if already green dont change 
+      // if yellow can change to green
+      // if gray can change to any
+      state.keyboardStatus[key] = className;
+    },
   },
 });
 
-export const { setCurrentRow, setPlayerGuesses, setGameWinState } = wordleSlice.actions;
+export const {
+  setCurrentRow,
+  setPlayerGuesses,
+  setGameWinState,
+  setSingleLetterKeyboardStatus,
+} = wordleSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value

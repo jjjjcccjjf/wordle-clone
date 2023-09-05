@@ -5,6 +5,7 @@ import {
   setCurrentRow,
   setPlayerGuesses,
   setGameWinState,
+  setSingleLetterKeyboardStatus,
 } from "./redux/slices/wordleSlice";
 import "@fontsource/roboto";
 import { RootState } from "./redux/store";
@@ -18,10 +19,7 @@ type InputProps = {
   inputRefs: Map<any, any>;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  props,
-  ref
-) {
+function Input(props :InputProps)  {
   const playerGuesses = useSelector(
     (state: RootState) => state.wordle.playerGuesses
   );
@@ -58,6 +56,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       animatePopToggle(thisCell, false);
     }
     setLetter(e.target.value);
+    
     if (nextCell) {
       nextCell.focus();
     }
@@ -66,6 +65,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const thisCell = map.get(`cell-${row}-${col}`);
     const prevCell = map.get(`cell-${row}-${col - 1}`);
+    const allowedKeys = /^[A-Za-z]$/;
 
     if (e.key === "Backspace" && thisCell.value === "" && prevCell) {
       animatePopToggle(prevCell, false);
@@ -81,18 +81,23 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           guessWord += item.value;
 
           item.classList.add(`animate-flip-${index}`);
+          const status = Wordle.getCorrectLetterStatus(
+          item.value,
+            index,
+            correctWord
+          );
+          const color = Wordle.getColorByLetterStatus(status);
           setTimeout(() => {
             item.classList.remove("bg-transparent");
             item.classList.remove("border-2");
-
-            const status = Wordle.getCorrectLetterStatus(
-              item.value,
-              index,
-              correctWord
-            );
-            const color = Wordle.getColorByLetterStatus(status);
+            
             item.classList.add(color);
           }, index * 400 + 200);
+
+          setTimeout(()=> {
+            dispatch(setSingleLetterKeyboardStatus({key: item.value.toUpperCase(), className: color}))
+
+          }, 4* 400 + 400)
         });
 
         const gameWinState = Wordle.getGuessWordResult(guessWord, correctWord);
@@ -103,12 +108,19 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           dispatch(setGameWinState(gameWinState));
         }
 
-        dispatch(setPlayerGuesses(guessWord));
+        dispatch(setPlayerGuesses(guessWord.toUpperCase()));
         dispatch(setCurrentRow(currentRow + 1));
       } else {
         console.log(playerGuesses);
         console.log("pressed enter but rejected");
       }
+    } else if (
+      !e.key.match(allowedKeys) &&
+      e.key !== "Backspace" &&
+      e.key !== "Enter"
+    ) {
+      console.log("prevented");
+      e.preventDefault();
     }
   };
 
@@ -129,7 +141,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
     ></input>
   );
-});
+}
 
 ////////////////////////////
 ////////////////////////////
@@ -196,7 +208,7 @@ export default function Home() {
   const handleClick = () => {
     const regexEmpty = generateRegexFocusOnEmpty(currentRow);
     const regexLast = generateRegexFocusOnLast(currentRow);
-    console.log(regexEmpty, regexLast);
+    // console.log(regexEmpty, regexLast);
 
     if (map && !gameWinState) {
       for (const [key, node] of map.entries()) {
@@ -234,7 +246,7 @@ export default function Home() {
             <RowInput key={index} inputRefs={inputRefs} row={index} />
           ))}
         </section>
-        <VirtualKeyboard/>
+        <VirtualKeyboard inputRefs={inputRefs}/>
       </main>
       <GameController/>
     </>

@@ -1,44 +1,44 @@
 import React, { ReactNode } from "react";
 import Key from "./Key";
 
-export default function VirtualKeyboard() {
+export default function VirtualKeyboard({inputRefs}) {
   return (
     <>
       <div className="flex flex-col gap-[6px] items-center justify-center">
         <VirtualKeyboardRow>
-          <Key>Q</Key>
-          <Key>W</Key>
-          <Key>E</Key>
-          <Key>R</Key>
-          <Key>T</Key>
-          <Key>Y</Key>
-          <Key>U</Key>
-          <Key>I</Key>
-          <Key>O</Key>
-          <Key>P</Key>
+          <Key inputRefs={inputRefs}>Q</Key>
+          <Key inputRefs={inputRefs}>W</Key>
+          <Key inputRefs={inputRefs}>E</Key>
+          <Key inputRefs={inputRefs}>R</Key>
+          <Key inputRefs={inputRefs}>T</Key>
+          <Key inputRefs={inputRefs}>Y</Key>
+          <Key inputRefs={inputRefs}>U</Key>
+          <Key inputRefs={inputRefs}>I</Key>
+          <Key inputRefs={inputRefs}>O</Key>
+          <Key inputRefs={inputRefs}>P</Key>
         </VirtualKeyboardRow>
         <VirtualKeyboardRow>
-          <Key>A</Key>
-          <Key>S</Key>
-          <Key>D</Key>
-          <Key>F</Key>
-          <Key>G</Key>
-          <Key>H</Key>
-          <Key>J</Key>
-          <Key>K</Key>
-          <Key>L</Key>
+          <Key inputRefs={inputRefs}>A</Key>
+          <Key inputRefs={inputRefs}>S</Key>
+          <Key inputRefs={inputRefs}>D</Key>
+          <Key inputRefs={inputRefs}>F</Key>
+          <Key inputRefs={inputRefs}>G</Key>
+          <Key inputRefs={inputRefs}>H</Key>
+          <Key inputRefs={inputRefs}>J</Key>
+          <Key inputRefs={inputRefs}>K</Key>
+          <Key inputRefs={inputRefs}>L</Key>
         </VirtualKeyboardRow>
         <VirtualKeyboardRow>
-          <Key bigKey>ENTER</Key>
-          <Key>Z</Key>
-          <Key>X</Key>
-          <Key>C</Key>
-          <Key>V</Key>
-          <Key>B</Key>
-          <Key>N</Key>
-          <Key>M</Key>
+          <Key bigKey>Q</Key>
+          <Key inputRefs={inputRefs}>Z</Key>
+          <Key inputRefs={inputRefs}>X</Key>
+          <Key inputRefs={inputRefs}>C</Key>
+          <Key inputRefs={inputRefs}>V</Key>
+          <Key inputRefs={inputRefs}>B</Key>
+          <Key inputRefs={inputRefs}>N</Key>
+          <Key inputRefs={inputRefs}>M</Key>
           <Key bigKey>
-            <svg
+            {/* <svg
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               height="20"
@@ -50,7 +50,7 @@ export default function VirtualKeyboard() {
                 fill="white"
                 d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"
               ></path>
-            </svg>
+            </svg> */}Q
           </Key>
         </VirtualKeyboardRow>
       </div>
