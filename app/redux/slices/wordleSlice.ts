@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { GameWinStateType, KeyboardStatusType } from "@/app/utils/types";
+import fiveLetterWordList from '@/app/utils/words.json'
 
 type WordleState = {
   playerGuesses: Array<string>;
@@ -9,6 +10,7 @@ type WordleState = {
   correctWord: string;
   gameWinState: GameWinStateType;
   keyboardStatus: KeyboardStatusType;
+  letterCells: Array<Array<string>>;
 };
 
 // Define the initial state using that type
@@ -46,6 +48,14 @@ const initialState: WordleState = {
     N: "",
     M: "",
   },
+  letterCells: [
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+  ],
 };
 
 export const wordleSlice = createSlice({
@@ -61,14 +71,24 @@ export const wordleSlice = createSlice({
     setGameWinState: (state, action: PayloadAction<GameWinStateType>) => {
       state.gameWinState = action.payload;
     },
+    setSingleLetterCell: (
+      state,
+      action: PayloadAction<{ row: number; col: number; value: string }>
+    ) => {
+      const { row, col, value } = action.payload;
+      state.letterCells[row][col] = value;
+    },
+    resetState: (state) => {
+      return initialState;
+    },
     setSingleLetterKeyboardStatus: (
       state,
       action: PayloadAction<{ key: string; className: string }>
     ) => {
       //fixthis
       const { key, className } = action.payload;
-      const currStatus = state.keyboardStatus[key]
-      if (className === 'bg-hit' && currStatus === 'bg-perfect') {
+      const currStatus = state.keyboardStatus[key];
+      if (className === "bg-hit" && currStatus === "bg-perfect") {
       } else {
         state.keyboardStatus[key] = className;
       }
@@ -81,6 +101,8 @@ export const {
   setPlayerGuesses,
   setGameWinState,
   setSingleLetterKeyboardStatus,
+  setSingleLetterCell,
+  resetState,
 } = wordleSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

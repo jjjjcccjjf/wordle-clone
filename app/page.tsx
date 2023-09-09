@@ -6,6 +6,8 @@ import {
   setPlayerGuesses,
   setGameWinState,
   setSingleLetterKeyboardStatus,
+  resetState,
+  setSingleLetterCell,
 } from "./redux/slices/wordleSlice";
 import "@fontsource/roboto";
 import { RootState } from "./redux/store";
@@ -13,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Wordle } from "./utils/Wordle";
 import VirtualKeyboard from "./components/VirtualKeyboard";
 import clsx from "clsx";
+import { resetCellColor, triggerInputChange, animatePopToggle } from "./utils";
 
 type InputProps = {
   row: number;
@@ -20,7 +23,10 @@ type InputProps = {
   inputRefs: Map<any, any>;
 };
 
+
+
 function Input(props: InputProps) {
+  const { row, col, inputRefs } = props;
   const playerGuesses = useSelector(
     (state: RootState) => state.wordle.playerGuesses
   );
@@ -31,22 +37,15 @@ function Input(props: InputProps) {
 
   let localRef = useRef();
 
-  const [letter, setLetter] = useState("");
+  // const [letter, setLetter] = useState("");
+  const letterCells = useSelector(
+    (state: RootState) => state.wordle.letterCells
+  );
+  const letter = letterCells[row][col];
   const dispatch = useDispatch();
-  const { row, col, inputRefs } = props;
   const map = inputRefs.current;
 
-  function animatePopToggle(node: HTMLInputElement, toggleOn = true) {
-    if (toggleOn) {
-      node.classList.add("border-white/40");
-      node.classList.add("animate-pop");
-      node.classList.remove("border-white/20");
-    } else {
-      node.classList.remove("border-white/40");
-      node.classList.remove("animate-pop");
-      node.classList.add("border-white/20");
-    }
-  }
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextCell = map.get(`cell-${row}-${col + 1}`);
@@ -56,7 +55,9 @@ function Input(props: InputProps) {
     } else {
       animatePopToggle(thisCell, false);
     }
-    setLetter(e.target.value);
+    // setLetter(e.target.value);
+    const value = e.target.value.toUpperCase();
+    dispatch(setSingleLetterCell({ row, col, value }));
 
     if (nextCell) {
       nextCell.focus();
@@ -70,8 +71,10 @@ function Input(props: InputProps) {
 
     if (e.key === "Backspace" && thisCell.value === "" && prevCell) {
       animatePopToggle(prevCell, false);
+      // prevCell.value = "";
+      triggerInputChange(prevCell, '');
       prevCell.focus();
-      prevCell.value = "";
+
     } else if (e.key === "Enter") {
       if (thisCell.value !== "" && col === 4) {
         console.log("pressed enter but accepted");
@@ -178,10 +181,24 @@ function RowInput(props) {
 ////////////////////////////
 ////////////////////////////
 
-function GameControls() {
+function GameControls({inputRefs}) {
+  const map = inputRefs.current
+
+  const dispatch = useDispatch();
+
+  const handleTryAgainClick = () => {
+    dispatch(resetState());
+    map.forEach((value, key) => {
+      resetCellColor(value)
+    });
+  };
+
   return (
-    <aside className="absolute top-7 right-4 flex gap-2">
-      <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
+    <aside className="flex gap-4">
+      <button
+        className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center"
+        onClick={handleTryAgainClick}
+      >
         Try again
       </button>
       <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
@@ -194,13 +211,13 @@ function GameControls() {
   );
 }
 
-function GameController() {
+function GameController({inputRefs}) {
   const gameWinState = useSelector(
     (state: RootState) => state.wordle.gameWinState
   );
 
   const classes = clsx(
-    "h-screen w-screen top-0 left-0 bg-black/50 flex items-center justify-center",
+    "h-screen w-screen top-0 left-0 bg-black/50 flex items-center justify-center z-20",
     "WIN" === gameWinState && "absolute",
     !gameWinState && "hidden"
   );
@@ -209,10 +226,12 @@ function GameController() {
 
   return (
     <>
-      <GameControls />
       <aside className={classes}>
-        <div className="w-1/2 text-4xl h-60 text-white font-bold bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center">
-          <p>YOU WIN</p>
+        <div className="w-1/2  h-60  bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
+          <p className="text-4xl text-white font-bold">YOU WIN</p>
+          <div className="">
+            <GameControls inputRefs={inputRefs}/>
+          </div>
         </div>
       </aside>
     </>
@@ -286,7 +305,10 @@ export default function Home() {
         </section>
         <VirtualKeyboard inputRefs={inputRefs} />
       </main>
-      <GameController />
+      <GameController inputRefs={inputRefs} />
+      <aside className="absolute top-7 right-7">
+        <GameControls inputRefs={inputRefs}/>
+      </aside>
     </>
   );
 }

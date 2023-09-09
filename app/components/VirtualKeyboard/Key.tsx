@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState, RefObject } from "react";
 import clsx from "clsx";
 import "@fontsource/roboto";
 import { RootState } from "@/app/redux/store";
@@ -9,7 +9,7 @@ import { LetterStatus } from "@/app/utils/types";
 type KeyProps = {
   bigKey?: boolean;
   children: string;
-  inputRefs: Map<any, any>;
+  inputRefs?: RefObject<Map<any, any>>;
 };
 
 const triggerBackspaceKeydown = (node: HTMLInputElement) => {
