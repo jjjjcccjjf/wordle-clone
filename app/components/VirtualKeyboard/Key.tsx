@@ -42,9 +42,6 @@ const triggerInputChange = (node: HTMLInputElement, inputValue: string) => {
 
 export default function Key({ bigKey, children, inputRefs }: KeyProps) {
   const trimmedChildren = children.trim().toUpperCase();
-  const correctWord = useSelector(
-    (state: RootState) => state.wordle.correctWord
-  );
 
   const gameWinState = useSelector(
     (state: RootState) => state.wordle.gameWinState

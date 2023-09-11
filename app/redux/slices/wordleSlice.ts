@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { GameWinStateType, KeyboardStatusType } from "@/app/utils/types";
 import fiveLetterWordList from '@/app/utils/words.json'
+import { Wordle } from "@/app/utils/Wordle";
 
 type WordleState = {
   playerGuesses: Array<string>;
@@ -18,7 +19,7 @@ const initialState: WordleState = {
   playerGuesses: [],
   currentRow: 0,
   testWord: "THROE",
-  correctWord: "GNASH",
+  correctWord: Wordle.getRandomFiveLetterWord(),
   gameWinState: null,
   keyboardStatus: {
     Q: "",
@@ -79,7 +80,11 @@ export const wordleSlice = createSlice({
       state.letterCells[row][col] = value;
     },
     resetState: (state) => {
-      return initialState;
+      const newInitialState = {
+        ...initialState,
+        correctWord: Wordle.getRandomFiveLetterWord(Math.floor(Math.random() * fiveLetterWordList.length)) // make this a util function
+      }
+      return newInitialState;
     },
     setSingleLetterKeyboardStatus: (
       state,

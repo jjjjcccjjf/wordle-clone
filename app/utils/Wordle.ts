@@ -1,5 +1,5 @@
 import { GameWinStateType, LetterStatus } from "./types";
-import fiveLetterWordList from '@/app/utils/words.json'
+import fiveLetterWordList from "@/app/utils/words.json";
 
 export class Wordle {
   static getCorrectLetterStatus(
@@ -38,15 +38,24 @@ export class Wordle {
     }
   }
 
-  static getGuessWordResult(guessWord:string, correctWord:string): GameWinStateType {
+  static getGuessWordResult(
+    guessWord: string,
+    correctWord: string
+  ): GameWinStateType {
     const capsGuessWord = guessWord.toUpperCase();
     const capsCorrectWord = correctWord.toUpperCase();
 
-    return capsCorrectWord === capsGuessWord ? "WIN": "LOSE";
+    return capsCorrectWord === capsGuessWord ? "WIN" : "LOSE";
   }
 
-  static getRandomFiveLetterWord() {
-    const randomIndex = Math.floor(Math.random() * fiveLetterWordList.length);
+  static getRandomFiveLetterWord(seed?: number) {
+    let randomIndex =
+      seed ?? Math.floor(Math.random() * fiveLetterWordList.length);
+
+    // const randomIndex = Math.floor(Math.random() * fiveLetterWordList.length);
+
+    console.log(randomIndex);
+
     return fiveLetterWordList[randomIndex];
   }
 }
