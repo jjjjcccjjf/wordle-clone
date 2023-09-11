@@ -50,12 +50,12 @@ export class Wordle {
 
   static getRandomFiveLetterWord(seed?: number) {
     let randomIndex =
-      seed ?? Math.floor(Math.random() * fiveLetterWordList.length);
-
-    // const randomIndex = Math.floor(Math.random() * fiveLetterWordList.length);
-
-    console.log(randomIndex);
+      seed ?? this.getRandomSeed();
 
     return fiveLetterWordList[randomIndex];
+  }
+
+  static getRandomSeed(): number {
+    return Math.floor(Math.random() * fiveLetterWordList.length);
   }
 }

@@ -7,19 +7,21 @@ import { Wordle } from "@/app/utils/Wordle";
 type WordleState = {
   playerGuesses: Array<string>;
   currentRow: number;
-  testWord: string;
   correctWord: string;
   gameWinState: GameWinStateType;
   keyboardStatus: KeyboardStatusType;
   letterCells: Array<Array<string>>;
+  randomSeed: number;
 };
 
 // Define the initial state using that type
+const randomSeed = Wordle.getRandomSeed()
+
 const initialState: WordleState = {
   playerGuesses: [],
   currentRow: 0,
-  testWord: "THROE",
-  correctWord: Wordle.getRandomFiveLetterWord(),
+  correctWord: Wordle.getRandomFiveLetterWord(randomSeed),
+  randomSeed: randomSeed,
   gameWinState: null,
   keyboardStatus: {
     Q: "",
@@ -59,6 +61,7 @@ const initialState: WordleState = {
   ],
 };
 
+
 export const wordleSlice = createSlice({
   name: "wordle",
   initialState,
@@ -80,9 +83,11 @@ export const wordleSlice = createSlice({
       state.letterCells[row][col] = value;
     },
     resetState: (state) => {
+      const newRandomSeed = Wordle.getRandomSeed()
       const newInitialState = {
         ...initialState,
-        correctWord: Wordle.getRandomFiveLetterWord(Math.floor(Math.random() * fiveLetterWordList.length)) // make this a util function
+        randomSeed: newRandomSeed,
+        correctWord: Wordle.getRandomFiveLetterWord(newRandomSeed) // make this a util function
       }
       return newInitialState;
     },
