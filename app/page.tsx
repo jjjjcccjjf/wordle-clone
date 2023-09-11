@@ -23,8 +23,6 @@ type InputProps = {
   inputRefs: Map<any, any>;
 };
 
-
-
 function Input(props: InputProps) {
   const { row, col, inputRefs } = props;
   const playerGuesses = useSelector(
@@ -44,8 +42,6 @@ function Input(props: InputProps) {
   const letter = letterCells[row][col];
   const dispatch = useDispatch();
   const map = inputRefs.current;
-
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextCell = map.get(`cell-${row}-${col + 1}`);
@@ -72,9 +68,8 @@ function Input(props: InputProps) {
     if (e.key === "Backspace" && thisCell.value === "" && prevCell) {
       animatePopToggle(prevCell, false);
       // prevCell.value = "";
-      triggerInputChange(prevCell, '');
+      triggerInputChange(prevCell, "");
       prevCell.focus();
-
     } else if (e.key === "Enter") {
       if (thisCell.value !== "" && col === 4) {
         console.log("pressed enter but accepted");
@@ -181,15 +176,15 @@ function RowInput(props) {
 ////////////////////////////
 ////////////////////////////
 
-function GameControls({inputRefs}) {
-  const map = inputRefs.current
+function GameControls({ inputRefs }) {
+  const map = inputRefs.current;
 
   const dispatch = useDispatch();
 
   const handleTryAgainClick = () => {
     dispatch(resetState());
     map.forEach((value, key) => {
-      resetCellColor(value)
+      resetCellColor(value);
     });
   };
 
@@ -199,10 +194,7 @@ function GameControls({inputRefs}) {
         className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center"
         onClick={handleTryAgainClick}
       >
-        Try again
-      </button>
-      <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
-        New word
+        Reset & Get New Word
       </button>
       <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
         Share
@@ -211,26 +203,48 @@ function GameControls({inputRefs}) {
   );
 }
 
-function GameController({inputRefs}) {
+function GameController({
+  inputRefs,
+}: {
+  inputRefs: React.RefObject<Map<any, any>>;
+}) {
   const gameWinState = useSelector(
     (state: RootState) => state.wordle.gameWinState
   );
 
+  const gameControllerRef = useRef(null);
+
   const classes = clsx(
-    "h-screen w-screen top-0 left-0 bg-black/50 flex items-center justify-center z-20",
-    "WIN" === gameWinState && "absolute",
-    !gameWinState && "hidden"
+    "h-screen w-screen top-0 left-0 bg-black/50 flex items-center justify-center z-20 hidden"
+    // "WIN" === gameWinState && "absolute",
+    // !gameWinState && "hidden"
   );
 
-  useEffect(() => {}, [gameWinState]);
+  useEffect(() => {
+    if (gameWinState === "WIN") {
+      setTimeout(() => {
+        if (gameControllerRef && gameControllerRef.current) {
+          const gameControllerNode = gameControllerRef.current;
+          gameControllerNode.classList.add("absolute");
+          gameControllerNode.classList.remove("hidden");
+        }
+      }, 4 * 400 + 400);
+    } else {
+      if (gameControllerRef && gameControllerRef.current) {
+        const gameControllerNode = gameControllerRef.current;
+        gameControllerNode.classList.remove("absolute");
+        gameControllerNode.classList.add("hidden");
+      }
+    }
+  }, [gameWinState]);
 
   return (
     <>
-      <aside className={classes}>
+      <aside className={classes} ref={gameControllerRef}>
         <div className="w-1/2  h-60  bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
           <p className="text-4xl text-white font-bold">YOU WIN</p>
           <div className="">
-            <GameControls inputRefs={inputRefs}/>
+            <GameControls inputRefs={inputRefs} />
           </div>
         </div>
       </aside>
@@ -307,7 +321,7 @@ export default function Home() {
       </main>
       <GameController inputRefs={inputRefs} />
       <aside className="absolute top-7 right-7">
-        <GameControls inputRefs={inputRefs}/>
+        <GameControls inputRefs={inputRefs} />
       </aside>
     </>
   );
