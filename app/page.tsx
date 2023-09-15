@@ -8,12 +8,14 @@ import {
   setSingleLetterKeyboardStatus,
   resetState,
   setSingleLetterCell,
+  setSingleEmojiCell,
 } from "./redux/slices/wordleSlice";
 import "@fontsource/roboto";
 import { RootState } from "./redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { Wordle } from "./utils/Wordle";
 import VirtualKeyboard from "./components/VirtualKeyboard";
+import GameControls from "./components/GameControls";
 import clsx from "clsx";
 import { resetCellColor, triggerInputChange, animatePopToggle } from "./utils";
 
@@ -75,6 +77,28 @@ function Input(props: InputProps) {
         console.log("pressed enter but accepted");
 
         let guessWord = "";
+
+        Array.from({ length: 5 }, (_, index) => {
+          const item = map.get(`cell-${currentRow}-${index}`);
+          guessWord += item.value;
+        });
+
+        const isWordValid = Wordle.checkWordValidity(guessWord)
+
+        if(!isWordValid) {
+          const item = map.get(`cell-${currentRow}-0`);
+          item.parentNode.classList.add('animate-shake')
+          
+          setTimeout(()=> {
+            item.parentNode.classList.remove('animate-shake')
+          }, 400)
+
+          console.log(isWordValid)
+          // animateInvalidWord()
+          e.preventDefault()
+          return;
+        }
+
         Array.from({ length: 5 }, (_, index) => {
           const item = map.get(`cell-${currentRow}-${index}`);
           guessWord += item.value;
@@ -86,6 +110,16 @@ function Input(props: InputProps) {
             correctWord
           );
           const color = Wordle.getColorByLetterStatus(status);
+          const emoji = Wordle.getEmojiByLetterStatus(status);
+
+          dispatch(
+            setSingleEmojiCell({
+              row,
+              col: index,
+              value: emoji,
+            })
+          );
+
           setTimeout(() => {
             item.classList.remove("bg-transparent");
             item.classList.remove("border-2");
@@ -104,7 +138,7 @@ function Input(props: InputProps) {
             ); // FIX THIS LATER. SHOULD UPPERCASE ALWAYS
           }, 4 * 400 + 400);
         });
-
+        
         const gameWinState = Wordle.getGuessWordResult(guessWord, correctWord);
 
         if (gameWinState === "WIN") {
@@ -176,33 +210,6 @@ function RowInput(props) {
 ////////////////////////////
 ////////////////////////////
 
-function GameControls({ inputRefs }) {
-  const map = inputRefs.current;
-
-  const dispatch = useDispatch();
-
-  const handleTryAgainClick = () => {
-    dispatch(resetState());
-    map.forEach((value, key) => {
-      resetCellColor(value);
-    });
-  };
-
-  return (
-    <aside className="flex gap-4">
-      <button
-        className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center"
-        onClick={handleTryAgainClick}
-      >
-        Reset & Get New Word
-      </button>
-      <button className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center">
-        Share
-      </button>
-    </aside>
-  );
-}
-
 function GameController({
   inputRefs,
 }: {
@@ -244,7 +251,7 @@ function GameController({
         <div className="w-1/2  h-60  bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
           <p className="text-4xl text-white font-bold">YOU WIN</p>
           <div className="">
-            <GameControls inputRefs={inputRefs} />
+            <GameControls inputRefs={inputRefs} tryAgain shareButton/>
           </div>
         </div>
       </aside>
@@ -321,7 +328,7 @@ export default function Home() {
       </main>
       <GameController inputRefs={inputRefs} />
       <aside className="absolute top-7 right-7">
-        <GameControls inputRefs={inputRefs} />
+        <GameControls inputRefs={inputRefs} tryAgain/>
       </aside>
     </>
   );

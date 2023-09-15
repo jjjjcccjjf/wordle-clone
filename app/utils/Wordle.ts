@@ -1,5 +1,6 @@
 import { GameWinStateType, LetterStatus } from "./types";
 import fiveLetterWordList from "@/app/utils/words.json";
+import validWordList from "@/app/utils/validWords.json";
 
 export class Wordle {
   static getCorrectLetterStatus(
@@ -34,7 +35,24 @@ export class Wordle {
       case "HIT":
         return hitColor;
       case "MISS":
+      default:
         return missColor;
+    }
+  }
+
+  static getEmojiByLetterStatus(status: LetterStatus): string {
+    const missEmoji = "⬛️";
+    const hitEmoji = "🟨";
+    const perfectEmoji = "🟩";
+
+    switch (status) {
+      case "PERFECT":
+        return perfectEmoji;
+      case "HIT":
+        return hitEmoji;
+      case "MISS":
+      default:
+        return missEmoji;
     }
   }
 
@@ -49,10 +67,13 @@ export class Wordle {
   }
 
   static getRandomFiveLetterWord(seed?: number) {
-    let randomIndex =
-      seed ?? this.getRandomSeed();
+    let randomIndex = seed ?? this.getRandomSeed();
 
     return fiveLetterWordList[randomIndex];
+  }
+
+  static checkWordValidity(word: string) : boolean {
+    return validWordList.includes(word.toUpperCase());
   }
 
   static getRandomSeed(): number {

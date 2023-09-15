@@ -11,6 +11,7 @@ type WordleState = {
   gameWinState: GameWinStateType;
   keyboardStatus: KeyboardStatusType;
   letterCells: Array<Array<string>>;
+  emojiCells: Array<Array<string>>;
   randomSeed: number;
 };
 
@@ -59,6 +60,14 @@ const initialState: WordleState = {
     ["", "", "", "", ""],
     ["", "", "", "", ""],
   ],
+  emojiCells: [
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+  ],
 };
 
 
@@ -81,6 +90,13 @@ export const wordleSlice = createSlice({
     ) => {
       const { row, col, value } = action.payload;
       state.letterCells[row][col] = value;
+    },
+    setSingleEmojiCell: (
+      state,
+      action: PayloadAction<{ row: number; col: number; value: string }>
+    ) => {
+      const { row, col, value } = action.payload;
+      state.emojiCells[row][col] = value;
     },
     resetState: (state) => {
       const newRandomSeed = Wordle.getRandomSeed()
@@ -112,6 +128,7 @@ export const {
   setGameWinState,
   setSingleLetterKeyboardStatus,
   setSingleLetterCell,
+  setSingleEmojiCell,
   resetState,
 } = wordleSlice.actions;
 

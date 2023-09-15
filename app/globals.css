@@ -34,6 +34,38 @@
   animation: scaleAnimation 0.075s forwards;
 }
 
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-7px);
+  }
+  30% {
+    transform: translateX(7px);
+  }
+  45% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  90% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(-1px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.4s 1;
+  animation-timing-function: ease-in-out;
+}
+
 @keyframes flipAnimation {
   0% {
     transform: perspective(2000px) rotateX(0deg);
