@@ -45,3 +45,11 @@ export function animatePopToggle(node: HTMLInputElement, toggleOn = true) {
     node.classList.add("border-white/20");
   }
 }
+
+export function animateShake(item: any) {
+  item.parentNode.classList.add("animate-shake");
+
+  setTimeout(() => {
+    item.parentNode.classList.remove("animate-shake");
+  }, 400);
+}
