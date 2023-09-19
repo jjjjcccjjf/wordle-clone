@@ -1,5 +1,6 @@
 import React, { ReactNode, RefObject } from "react";
 import Key from "./Key";
+import BigKey from "./BigKey";
 
 type VirtualKeyboardProps = {
   inputRefs: RefObject<Map<any, any>>;
@@ -33,7 +34,7 @@ export default function VirtualKeyboard({ inputRefs }: VirtualKeyboardProps) {
           <Key inputRefs={inputRefs}>L</Key>
         </VirtualKeyboardRow>
         <VirtualKeyboardRow>
-          <Key bigKey>Q</Key>
+          <BigKey bigKeyType="ENTER">ENTER</BigKey>
           <Key inputRefs={inputRefs}>Z</Key>
           <Key inputRefs={inputRefs}>X</Key>
           <Key inputRefs={inputRefs}>C</Key>
@@ -41,8 +42,8 @@ export default function VirtualKeyboard({ inputRefs }: VirtualKeyboardProps) {
           <Key inputRefs={inputRefs}>B</Key>
           <Key inputRefs={inputRefs}>N</Key>
           <Key inputRefs={inputRefs}>M</Key>
-          <Key bigKey>
-            {/* <svg
+          <BigKey bigKeyType="BACKSPACE">
+            <svg
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               height="20"
@@ -54,9 +55,8 @@ export default function VirtualKeyboard({ inputRefs }: VirtualKeyboardProps) {
                 fill="white"
                 d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"
               ></path>
-            </svg> */}
-            Q
-          </Key>
+            </svg>
+          </BigKey>
         </VirtualKeyboardRow>
       </div>
     </>

@@ -1,10 +1,8 @@
-import React, { ReactNode, useEffect, useState, RefObject } from "react";
-import clsx from "clsx";
-import "@fontsource/roboto";
 import { RootState } from "@/app/redux/store";
+import "@fontsource/roboto";
+import clsx from "clsx";
+import { RefObject, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Wordle } from "@/app/utils/Wordle";
-import { LetterStatus } from "@/app/utils/types";
 
 type KeyProps = {
   bigKey?: boolean;
@@ -77,8 +75,6 @@ export default function Key({ bigKey, children, inputRefs }: KeyProps) {
       }
 
       if (nextCell && nextCell.value.length === 0) {
-        // firstCell.value = 'Q';
-        // triggerBackspaceKeydown(nextCell)
         triggerInputChange(nextCell, children);
       }
     }
