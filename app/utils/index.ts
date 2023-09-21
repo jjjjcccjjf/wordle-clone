@@ -53,3 +53,16 @@ export function animateShake(item: any) {
     item.parentNode.classList.remove("animate-shake");
   }, 400);
 }
+
+export const generateRegexFocusOnEmpty = (row: number) =>
+  new RegExp(`^cell-${row}-[0-4]$`);
+
+export const generateRegexFocusOnLast = (row: number) =>
+  new RegExp(`^cell-${row}-4$`);
+
+export const getRowColFromKey = (key: string) => {
+  const row = Number(key.substring(5, 6)); // optimize this later
+  const col = Number(key.substring(7, 8));
+
+  return { row, col };
+};

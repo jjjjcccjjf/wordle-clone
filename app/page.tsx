@@ -9,6 +9,7 @@ import GameControls from "./components/GameControls";
 import RowInput from "./components/RowInput";
 import VirtualKeyboard from "./components/VirtualKeyboard";
 import { RootState } from "./redux/store";
+import { generateRegexFocusOnEmpty, generateRegexFocusOnLast } from "./utils";
 
 export default function Home() {
   const inputRefs = useRef(new Map());
@@ -18,11 +19,6 @@ export default function Home() {
     (state: RootState) => state.wordle.gameWinState
   );
   const map = inputRefs.current;
-
-  const generateRegexFocusOnEmpty = (row: number) =>
-    new RegExp(`^cell-${row}-[0-4]$`);
-  const generateRegexFocusOnLast = (row: number) =>
-    new RegExp(`^cell-${row}-4$`);
 
   const handleClick = () => {
     const regexEmpty = generateRegexFocusOnEmpty(currentRow);

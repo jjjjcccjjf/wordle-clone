@@ -69,6 +69,11 @@ export default function Input(props: InputProps) {
         // prevCell.value = "";
         triggerInputChange(prevCell, "");
         prevCell.focus();
+      } else if (e.key === "Backspace" && thisCell.length === 1 && thisCell) {
+        animatePopToggle(thisCell, false);
+        triggerInputChange(thisCell, "");
+        console.log('backspaced full');
+        
       } else if (e.key === "Enter") {
         if (thisCell.value !== "" && col === 4) {
           // console.log("pressed enter but accepted");
@@ -163,7 +168,7 @@ export default function Input(props: InputProps) {
     <input
       value={letter}
       maxLength={1}
-      className="h-[62.5px] w-[62px] border-2 border-white/20 bg-transparent text-center font-[Roboto] text-3xl font-bold uppercase text-white outline-none transition-transform duration-200 caret-transparent pointer-events-none"
+      className="h-[62.5px] w-[62px] border-2 border-white/20 bg-transparent text-center font-[Roboto] text-3xl font-bold uppercase text-white outline-none transition-transform duration-200  pointer-events-none"
       ref={(node) => {
         if (map && localRef) {
           if (node) {

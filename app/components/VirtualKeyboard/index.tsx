@@ -34,7 +34,7 @@ export default function VirtualKeyboard({ inputRefs }: VirtualKeyboardProps) {
           <Key inputRefs={inputRefs}>L</Key>
         </VirtualKeyboardRow>
         <VirtualKeyboardRow>
-          <BigKey bigKeyType="ENTER">ENTER</BigKey>
+          <BigKey bigKeyType="ENTER" inputRefs={inputRefs}>ENTER</BigKey>
           <Key inputRefs={inputRefs}>Z</Key>
           <Key inputRefs={inputRefs}>X</Key>
           <Key inputRefs={inputRefs}>C</Key>
@@ -42,7 +42,7 @@ export default function VirtualKeyboard({ inputRefs }: VirtualKeyboardProps) {
           <Key inputRefs={inputRefs}>B</Key>
           <Key inputRefs={inputRefs}>N</Key>
           <Key inputRefs={inputRefs}>M</Key>
-          <BigKey bigKeyType="BACKSPACE">
+          <BigKey bigKeyType="BACKSPACE" inputRefs={inputRefs}>
             <svg
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
