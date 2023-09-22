@@ -1,8 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { GameWinStateType, KeyboardStatusType } from "@/app/utils/types";
-import fiveLetterWordList from '@/app/utils/words.json'
 import { Wordle } from "@/app/utils/Wordle";
+import type {
+  GameWinStateType,
+  KeyboardStatusType,
+  ToastType,
+} from "@/app/utils/types";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 type WordleState = {
   playerGuesses: Array<string>;
@@ -13,10 +16,11 @@ type WordleState = {
   letterCells: Array<Array<string>>;
   emojiCells: Array<Array<string>>;
   randomSeed: number;
+  toast: ToastType;
 };
 
 // Define the initial state using that type
-const randomSeed = Wordle.getRandomSeed()
+const randomSeed = Wordle.getRandomSeed();
 
 const initialState: WordleState = {
   playerGuesses: [],
@@ -24,6 +28,10 @@ const initialState: WordleState = {
   correctWord: Wordle.getRandomFiveLetterWord(randomSeed),
   randomSeed: randomSeed,
   gameWinState: null,
+  toast: {
+    message: "",
+    additionalClass: "hidden",
+  },
   keyboardStatus: {
     Q: "",
     W: "",
@@ -70,7 +78,6 @@ const initialState: WordleState = {
   ],
 };
 
-
 export const wordleSlice = createSlice({
   name: "wordle",
   initialState,
@@ -99,12 +106,12 @@ export const wordleSlice = createSlice({
       state.emojiCells[row][col] = value;
     },
     resetState: (state) => {
-      const newRandomSeed = Wordle.getRandomSeed()
+      const newRandomSeed = Wordle.getRandomSeed();
       const newInitialState = {
         ...initialState,
         randomSeed: newRandomSeed,
-        correctWord: Wordle.getRandomFiveLetterWord(newRandomSeed) // make this a util function
-      }
+        correctWord: Wordle.getRandomFiveLetterWord(newRandomSeed), // make this a util function
+      };
       return newInitialState;
     },
     setSingleLetterKeyboardStatus: (
@@ -119,6 +126,12 @@ export const wordleSlice = createSlice({
         state.keyboardStatus[key] = className;
       }
     },
+    setToast: (state, action: PayloadAction<ToastType>) => {
+      state.toast = action.payload;
+    },
+    resetToast: (state) => {
+      state.toast = { message: "", additionalClass: "hidden" };
+    },
   },
 });
 
@@ -130,6 +143,8 @@ export const {
   setSingleLetterCell,
   setSingleEmojiCell,
   resetState,
+  setToast,
+  resetToast
 } = wordleSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

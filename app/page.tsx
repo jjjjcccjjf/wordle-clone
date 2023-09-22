@@ -10,6 +10,7 @@ import RowInput from "./components/RowInput";
 import VirtualKeyboard from "./components/VirtualKeyboard";
 import { RootState } from "./redux/store";
 import { generateRegexFocusOnEmpty, generateRegexFocusOnLast } from "./utils";
+import Toast from "./components/Toast";
 
 export default function Home() {
   const inputRefs = useRef(new Map());
@@ -56,7 +57,7 @@ export default function Home() {
   return (
     <>
       <main
-        className="h-screen w-screen bg-black/90 flex flex-col items-center justify-center gap-10 "
+        className="h-screen w-screen bg-[#121213] flex flex-col items-center justify-center gap-10 "
         ref={mainRef}
       >
         <section className="grid gap-[5px]">
@@ -70,6 +71,7 @@ export default function Home() {
       <aside className="absolute top-7 right-7">
         <GameControls inputRefs={inputRefs} tryAgain />
       </aside>
+      <Toast/>
     </>
   );
 }

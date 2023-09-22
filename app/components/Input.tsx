@@ -7,6 +7,7 @@ import {
   setSingleEmojiCell,
   setSingleLetterCell,
   setSingleLetterKeyboardStatus,
+  setToast,
 } from "../redux/slices/wordleSlice";
 import { RootState } from "../redux/store";
 import { animatePopToggle, animateShake, triggerInputChange } from "../utils";
@@ -72,8 +73,7 @@ export default function Input(props: InputProps) {
       } else if (e.key === "Backspace" && thisCell.length === 1 && thisCell) {
         animatePopToggle(thisCell, false);
         triggerInputChange(thisCell, "");
-        console.log('backspaced full');
-        
+        console.log("backspaced full");
       } else if (e.key === "Enter") {
         if (thisCell.value !== "" && col === 4) {
           // console.log("pressed enter but accepted");
@@ -90,6 +90,12 @@ export default function Input(props: InputProps) {
           if (!isWordValid) {
             const item = map.get(`cell-${currentRow}-0`);
             animateShake(item);
+            dispatch(
+              setToast({
+                message: "Not in word list",
+                additionalClass: "flex",
+              })
+            );
             e.preventDefault();
             return;
           }
@@ -149,6 +155,12 @@ export default function Input(props: InputProps) {
         } else {
           const item = map.get(`cell-${currentRow}-0`);
           animateShake(item);
+          dispatch(
+            setToast({
+              message: "Not enough letters",
+              additionalClass: "flex",
+            })
+          );
           e.preventDefault();
           console.log("pressed enter but rejected");
           return;
