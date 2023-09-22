@@ -1,4 +1,4 @@
-import { resetState } from "@/app/redux/slices/wordleSlice";
+import { resetState, setToast } from "@/app/redux/slices/wordleSlice";
 import { RootState } from "@/app/redux/store";
 import { resetCellColor } from "@/app/utils";
 import { ReactNode } from "react";
@@ -48,6 +48,7 @@ export function ShareButton() {
   const emojiCells = useSelector((state: RootState) => state.wordle.emojiCells);
   const randomSeed = useSelector((state: RootState) => state.wordle.randomSeed);
   const currentRow = useSelector((state: RootState) => state.wordle.currentRow);
+  const dispatch = useDispatch();
 
   const handleShareClick = () => {
     let resultString = `Wordle Clone by endan: Seed #${randomSeed} ${currentRow}/6 \n\n`;
@@ -65,6 +66,10 @@ export function ShareButton() {
       if (i < emojiCells.length - 1) {
         resultString += "\n";
       }
+
+      dispatch(
+        setToast({ message: "Copied to clipboard!", additionalClass: "flex" })
+      );
     }
 
     resultString = resultString.trim();

@@ -10,7 +10,7 @@ export default function Toast() {
   const dispatch = useDispatch();
 
   const classes = clsx(
-    "fixed top-16 w-full pointer-events-none items-center justify-center gap-4 flex-col",
+    "fixed top-16 w-full pointer-events-none items-center justify-center gap-4 flex-col z-20",
     toast.additionalClass
   );
 
