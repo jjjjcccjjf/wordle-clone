@@ -3,6 +3,7 @@ import { RootState } from "@/app/redux/store";
 import { resetCellColor } from "@/app/utils";
 import { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BsShare } from "react-icons/bs";
 
 type GameControlsProps = {
   inputRefs: any; // fix this later
@@ -18,7 +19,7 @@ export default function GameControls({
   const map = inputRefs.current;
 
   return (
-    <aside className="flex gap-4">
+    <aside className="flex gap-4 items-center justify-center">
       {tryAgain && <TryAgainButton map={map} />}
       {shareButton && <ShareButton />}
     </aside>
@@ -36,7 +37,7 @@ export function TryAgainButton({ map }) {
   };
   return (
     <button
-      className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center"
+      className="h-9 py-4 px-8 rounded-full flex items-center justify-center border border-white text-white text-sm tracking-wide"
       onClick={handleTryAgainClick}
     >
       Reset & Get New Word
@@ -71,8 +72,10 @@ export function ShareButton() {
         setToast({ message: "Copied to clipboard!", additionalClass: "flex" })
       );
     }
-
+    
     resultString = resultString.trim();
+    
+    resultString += "\n\nlinktowebsite";
     // console.log(resultString)
 
     navigator.clipboard
@@ -87,10 +90,10 @@ export function ShareButton() {
 
   return (
     <button
-      className="h-9 bg-[wheat] p-4 rounded-full flex items-center justify-center"
+      className="h-9 bg-[#538d4e] text-white text-sm py-4 px-8 rounded-full flex items-center justify-center font-bold gap-3 tracking-wide"
       onClick={handleShareClick}
     >
-      Share
+      Share <BsShare />
     </button>
   );
 }

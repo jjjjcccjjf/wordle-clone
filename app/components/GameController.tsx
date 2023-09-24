@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import GameControls from "./GameControls";
+import { setToast } from "../redux/slices/wordleSlice";
 
 export default function GameController({
   inputRefs,
@@ -12,6 +13,7 @@ export default function GameController({
   const gameWinState = useSelector(
     (state: RootState) => state.wordle.gameWinState
   );
+  const dispatch = useDispatch();
 
   const gameControllerRef = useRef(null);
 
@@ -26,6 +28,13 @@ export default function GameController({
           const gameControllerNode = gameControllerRef.current as HTMLElement;
           gameControllerNode.classList.add("absolute");
           gameControllerNode.classList.remove("hidden");
+          dispatch(setToast({ message: "Splendid!", additionalClass: "flex" }));
+        }
+      }, 4 * 400 + 400);
+    } else if (gameWinState === "LOSE") {
+      setTimeout(() => {
+        if (gameControllerRef && gameControllerRef.current) {
+          dispatch(setToast({ message: "Too bad!", additionalClass: "flex" }));
         }
       }, 4 * 400 + 400);
     } else {
@@ -40,8 +49,8 @@ export default function GameController({
   return (
     <>
       <aside className={classes} ref={gameControllerRef}>
-        <div className="w-1/2  h-60  bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
-          <p className="text-4xl text-white font-bold">YOU WIN</p>
+        <div className="xl:w-1/3 lg:w-1/2 w-2/3 h-60  bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
+          <p className="text-4xl text-white font-bold">Nice one! 🎉</p>
           <div className="">
             <GameControls inputRefs={inputRefs} tryAgain shareButton />
           </div>

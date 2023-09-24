@@ -11,6 +11,7 @@ import VirtualKeyboard from "./components/VirtualKeyboard";
 import { RootState } from "./redux/store";
 import { generateRegexFocusOnEmpty, generateRegexFocusOnLast } from "./utils";
 import Toast from "./components/Toast";
+import Nav from "./components/Nav";
 
 export default function Home() {
   const inputRefs = useRef(new Map());
@@ -56,6 +57,9 @@ export default function Home() {
 
   return (
     <>
+      <Nav>
+        <GameControls inputRefs={inputRefs} tryAgain />
+      </Nav>
       <main
         className="h-screen w-screen bg-[#121213] flex flex-col items-center justify-center gap-10 "
         ref={mainRef}
@@ -68,10 +72,8 @@ export default function Home() {
         <VirtualKeyboard inputRefs={inputRefs} />
       </main>
       <GameController inputRefs={inputRefs} />
-      <aside className="absolute top-7 right-7">
-        <GameControls inputRefs={inputRefs} tryAgain />
-      </aside>
-      <Toast/>
+      <aside className="absolute top-7 right-7"></aside>
+      <Toast />
     </>
   );
 }
