@@ -37,10 +37,11 @@ export function TryAgainButton({ map }) {
   };
   return (
     <button
-      className="h-9 py-4 px-8 rounded-full flex items-center justify-center border border-white text-white text-sm tracking-wide"
+      className="h-9 py-4 lg:px-8 px-4 rounded-full flex items-center justify-center border border-white text-white text-sm tracking-wide"
       onClick={handleTryAgainClick}
     >
-      Reset & Get New Word
+      <span className="md:block hidden">Reset & Get New Word</span>
+      <span className="md:hidden block">Reset</span>
     </button>
   );
 }

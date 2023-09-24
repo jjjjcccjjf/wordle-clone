@@ -10,16 +10,6 @@ type KeyProps = {
   inputRefs?: RefObject<Map<any, any>>;
 };
 
-const triggerBackspaceKeydown = (node: HTMLInputElement) => {
-  const event = new KeyboardEvent("keydown", {
-    key: "Backspace",
-    bubbles: true,
-    cancelable: true,
-  });
-
-  node.dispatchEvent(event);
-};
-
 const triggerInputChange = (node: HTMLInputElement, inputValue: string) => {
   const descriptor = Object.getOwnPropertyDescriptor(node, "value");
 
@@ -83,8 +73,7 @@ export default function Key({ bigKey, children, inputRefs }: KeyProps) {
   useEffect(() => {}, [keyboardStatus]);
 
   const classes = clsx(
-    "w-[43px] h-[58px] flex items-center justify-center font-bold font-[Roboto] rounded-md text-white text-xl",
-    { "w-[65.41px] h-[58px] text-[11.5px] font-normal ": bigKey },
+    "md:w-[43px] w-[25px] h-[58px] flex items-center justify-center font-bold font-[Roboto] rounded-md text-white text-xl",
     keyboardStatus[trimmedChildren]
       ? keyboardStatus[trimmedChildren]
       : "bg-key-default"

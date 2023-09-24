@@ -49,8 +49,8 @@ export default function GameController({
   return (
     <>
       <aside className={classes} ref={gameControllerRef}>
-        <div className="xl:w-1/3 lg:w-1/2 w-2/3 h-60  bg-[#121213] rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
-          <p className="text-4xl text-white font-bold">Nice one! 🎉</p>
+        <div className="xl:w-1/3 lg:w-1/2 md:w-2/3 w-full h-60  bg-[#121213] md:rounded-xl border border-white/5 font-[Roboto] flex items-center justify-center flex-col gap-8">
+          <p className="md:text-4xl text-3xl text-white font-bold">Nice one! 🎉</p>
           <div className="">
             <GameControls inputRefs={inputRefs} tryAgain shareButton />
           </div>
