@@ -75,7 +75,7 @@ export function ShareButton() {
 
     resultString = resultString.trim();
 
-    resultString += "\n\nlinktowebsite";
+    resultString += "\n\nhttps://wordle-clone-endan.vercel.app/";
 
     navigator.clipboard
       .writeText(resultString)
