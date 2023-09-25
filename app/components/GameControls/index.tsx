@@ -36,7 +36,7 @@ export function TryAgainButton({ map }: { map: Map<any, any> }) {
   };
   return (
     <button
-      className="h-9 py-4 lg:px-8 px-4 rounded-full flex items-center justify-center border border-white text-white text-sm tracking-wide"
+      className="md:h-9 h-7 md:py-4 lg:px-8 md:px-4 px-3 rounded-full flex items-center justify-center border border-white text-white text-sm tracking-wide"
       onClick={handleTryAgainClick}
     >
       <span className="md:block hidden">Reset & Get New Word</span>
@@ -87,9 +87,10 @@ export function ShareButton() {
       });
   };
 
+
   return (
     <button
-      className="h-9 bg-[#538d4e] text-white text-sm py-4 px-8 rounded-full flex items-center justify-center font-bold gap-3 tracking-wide"
+      className="md:h-9 h-7 bg-[#538d4e] text-white text-sm md:py-4 lg:px-8 md:px-4 px-3 rounded-full flex items-center justify-center font-bold gap-3 tracking-wide"
       onClick={handleShareClick}
     >
       Share <BsShare />

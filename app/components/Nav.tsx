@@ -13,7 +13,7 @@ export default function Nav({ children }: NavProps) {
         <li className="px-8"></li>
         <li className="md:place-self-center place-self-end flex items-center justify-center md:flex-col flex-row md:gap-0">
           <p className="font-['Patua_One']  text-white md:text-4xl text-2xl">Wordle</p>
-          <p className="text-white font-[Roboto] text-[0.70rem] tracking-wider w-32 md:pl-0 pl-3">
+          <p className="text-white font-[Roboto] text-[0.70rem] tracking-wider w-32  pl-3">
             clone by endan
           </p>
         </li>

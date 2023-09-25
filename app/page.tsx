@@ -63,10 +63,10 @@ export default function Home() {
         <GameControls inputRefs={inputRefs} tryAgain />
       </Nav>
       <main
-        className="h-screen w-screen bg-[#121213] flex flex-col items-center justify-center gap-10 "
+        className="h-screen w-screen bg-[#121213] flex flex-col items-center justify-center md:gap-10 gap-4 "
         ref={mainRef}
       >
-        <section className="grid gap-[5px]">
+        <section className="grid gap-[5px] mt-[38px] md:mt-0">
           {Array.from({ length: 6 }, (_, index) => (
             <RowInput key={index} inputRefs={inputRefs} row={index} />
           ))}

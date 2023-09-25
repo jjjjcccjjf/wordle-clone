@@ -190,7 +190,7 @@ export default function Input(props: InputProps) {
     <input
       value={letter}
       maxLength={1}
-      className="md:h-[62.5px] md:w-[62px] w-[56px] h-[56px] border-2 border-white/20 bg-transparent text-center font-[Roboto] text-3xl font-bold uppercase text-white outline-none transition-transform duration-200 caret-transparent pointer-events-none"
+      className="lg:h-[62.5px] lg:w-[62px] md:w-[56px] md:h-[56px] h-[47px] w-[47px] border-2 border-white/20 bg-transparent text-center font-[Roboto] text-3xl font-bold uppercase text-white outline-none transition-transform duration-200 caret-transparent pointer-events-none"
       ref={(node) => {
         if (map && localRef) {
           if (node) {
@@ -201,6 +201,7 @@ export default function Input(props: InputProps) {
           }
         }
       }}
+      inputMode="none"
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
       onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
     ></input>
