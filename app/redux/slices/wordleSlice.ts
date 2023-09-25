@@ -144,7 +144,7 @@ export const {
   setSingleEmojiCell,
   resetState,
   setToast,
-  resetToast
+  resetToast,
 } = wordleSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

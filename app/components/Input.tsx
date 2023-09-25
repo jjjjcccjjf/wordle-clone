@@ -30,7 +30,7 @@ export default function Input(props: InputProps) {
     (state: RootState) => state.wordle.correctWord
   );
 
-  let localRef = useRef();
+  const localRef = useRef<HTMLInputElement | null>(null);
 
   // const [letter, setLetter] = useState("");
   const letterCells = useSelector(

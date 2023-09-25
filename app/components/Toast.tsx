@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
 import "@fontsource/roboto";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 import clsx from "clsx";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { resetToast } from "../redux/slices/wordleSlice";
+import { RootState } from "../redux/store";
 
 export default function Toast() {
   const toast = useSelector((state: RootState) => state.wordle.toast);

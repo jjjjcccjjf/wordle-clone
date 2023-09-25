@@ -1,6 +1,6 @@
-import React, { ReactNode, RefObject } from "react";
-import Key from "./Key";
+import { ReactNode, RefObject } from "react";
 import BigKey from "./BigKey";
+import Key from "./Key";
 
 type VirtualKeyboardProps = {
   inputRefs: RefObject<Map<any, any>>;
@@ -34,7 +34,9 @@ export default function VirtualKeyboard({ inputRefs }: VirtualKeyboardProps) {
           <Key inputRefs={inputRefs}>L</Key>
         </VirtualKeyboardRow>
         <VirtualKeyboardRow>
-          <BigKey bigKeyType="Enter" inputRefs={inputRefs}>ENTER</BigKey>
+          <BigKey bigKeyType="Enter" inputRefs={inputRefs}>
+            ENTER
+          </BigKey>
           <Key inputRefs={inputRefs}>Z</Key>
           <Key inputRefs={inputRefs}>X</Key>
           <Key inputRefs={inputRefs}>C</Key>

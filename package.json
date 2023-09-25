@@ -9,9 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fontsource-variable/noto-serif": "^5.0.3",
-    "@fontsource/ibm-plex-serif": "^5.0.8",
-    "@fontsource/noto-serif": "^5.0.12",
     "@fontsource/patua-one": "^5.0.12",
     "@fontsource/roboto": "^5.0.8",
     "@reduxjs/toolkit": "^1.9.5",

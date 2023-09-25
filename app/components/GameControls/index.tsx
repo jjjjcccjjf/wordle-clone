@@ -1,9 +1,8 @@
 import { resetState, setToast } from "@/app/redux/slices/wordleSlice";
 import { RootState } from "@/app/redux/store";
 import { resetCellColor } from "@/app/utils";
-import { ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { BsShare } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 
 type GameControlsProps = {
   inputRefs: any; // fix this later
@@ -26,7 +25,7 @@ export default function GameControls({
   );
 }
 
-export function TryAgainButton({ map }) {
+export function TryAgainButton({ map }: { map: Map<any, any> }) {
   const dispatch = useDispatch();
 
   const handleTryAgainClick = () => {
@@ -73,11 +72,10 @@ export function ShareButton() {
         setToast({ message: "Copied to clipboard!", additionalClass: "flex" })
       );
     }
-    
+
     resultString = resultString.trim();
-    
+
     resultString += "\n\nlinktowebsite";
-    // console.log(resultString)
 
     navigator.clipboard
       .writeText(resultString)

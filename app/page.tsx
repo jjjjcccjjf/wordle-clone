@@ -6,16 +6,16 @@ import "@fontsource/roboto";
 import { useSelector } from "react-redux";
 import GameController from "./components/GameController";
 import GameControls from "./components/GameControls";
+import Nav from "./components/Nav";
 import RowInput from "./components/RowInput";
+import Toast from "./components/Toast";
 import VirtualKeyboard from "./components/VirtualKeyboard";
 import { RootState } from "./redux/store";
 import { generateRegexFocusOnEmpty, generateRegexFocusOnLast } from "./utils";
-import Toast from "./components/Toast";
-import Nav from "./components/Nav";
 
 export default function Home() {
-  const inputRefs = useRef(new Map());
-  const mainRef = useRef();
+  const inputRefs = useRef(new Map<any, any>());
+  const mainRef = useRef<HTMLElement | null>(null);
   const currentRow = useSelector((state: RootState) => state.wordle.currentRow);
   const gameWinState = useSelector(
     (state: RootState) => state.wordle.gameWinState
@@ -25,7 +25,6 @@ export default function Home() {
   const handleClick = () => {
     const regexEmpty = generateRegexFocusOnEmpty(currentRow);
     const regexLast = generateRegexFocusOnLast(currentRow);
-    // console.log(regexEmpty, regexLast);
 
     if (map && !gameWinState) {
       for (const [key, node] of map.entries()) {
@@ -34,18 +33,21 @@ export default function Home() {
           (node && node.value.length === 1 && regexLast.test(key))
         ) {
           node.focus();
-          break; // Focus the first empty input and stop iterating
+          break;
         }
       }
     }
   };
 
   useEffect(() => {
-    mainRef.current.addEventListener("click", handleClick);
+    if (mainRef && mainRef.current) {
+      const mainRefCurrent = mainRef.current;
+      mainRefCurrent.addEventListener("click", handleClick);
 
-    return () => {
-      mainRef.current.removeEventListener("click", handleClick);
-    };
+      return () => {
+        mainRefCurrent.removeEventListener("click", handleClick);
+      };
+    }
   }, [currentRow]);
 
   useEffect(() => {
@@ -72,7 +74,6 @@ export default function Home() {
         <VirtualKeyboard inputRefs={inputRefs} />
       </main>
       <GameController inputRefs={inputRefs} />
-      <aside className="absolute top-7 right-7"></aside>
       <Toast />
     </>
   );

@@ -7,9 +7,8 @@ import {
   getRowColFromKey,
 } from "@/app/utils";
 import "@fontsource/roboto";
-import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import clsx from "clsx";
-import { ReactNode, RefObject, useEffect } from "react";
+import { ReactNode, RefObject } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 type KeyProps = {
@@ -64,13 +63,12 @@ export default function BigKey({ bigKeyType, children, inputRefs }: KeyProps) {
     });
 
     if (map) {
-      
       for (const [key, node] of map.entries()) {
         if (
           (node && node.value.length === 0 && regexEmpty.test(key)) ||
           (node && node.value.length === 1 && regexLast.test(key))
         ) {
-          node.focus()
+          node.focus();
           node.dispatchEvent(event);
           break; // Focus the first empty input and stop iterating
         }

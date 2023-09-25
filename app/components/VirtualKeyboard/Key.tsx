@@ -1,4 +1,5 @@
 import { RootState } from "@/app/redux/store";
+import { triggerInputChange } from "@/app/utils";
 import "@fontsource/roboto";
 import clsx from "clsx";
 import { RefObject, useEffect } from "react";
@@ -8,24 +9,6 @@ type KeyProps = {
   bigKey?: boolean;
   children: string;
   inputRefs?: RefObject<Map<any, any>>;
-};
-
-const triggerInputChange = (node: HTMLInputElement, inputValue: string) => {
-  const descriptor = Object.getOwnPropertyDescriptor(node, "value");
-
-  node.value = `${inputValue}#`;
-  if (descriptor && descriptor.configurable) {
-    delete node.value;
-  }
-  node.value = inputValue;
-
-  const e = document.createEvent("HTMLEvents");
-  e.initEvent("change", true, false);
-  node.dispatchEvent(e);
-
-  if (descriptor) {
-    Object.defineProperty(node, "value", descriptor);
-  }
 };
 
 export default function Key({ bigKey, children, inputRefs }: KeyProps) {

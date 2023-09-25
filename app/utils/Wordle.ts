@@ -1,6 +1,6 @@
-import { GameWinStateType, LetterStatus } from "./types";
-import fiveLetterWordList from "@/app/utils/words.json";
 import validWordList from "@/app/utils/validWords.json";
+import fiveLetterWordList from "@/app/utils/words.json";
+import { GameWinStateType, LetterStatus } from "./types";
 
 export class Wordle {
   static getCorrectLetterStatus(
@@ -72,7 +72,7 @@ export class Wordle {
     return fiveLetterWordList[randomIndex];
   }
 
-  static checkWordValidity(word: string) : boolean {
+  static checkWordValidity(word: string): boolean {
     return validWordList.includes(word.toUpperCase());
   }
 

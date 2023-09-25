@@ -6,7 +6,8 @@ export const triggerInputChange = (
 
   node.value = `${inputValue}#`;
   if (descriptor && descriptor.configurable) {
-    delete node.value;
+    // delete node.value;
+    Reflect.deleteProperty(node, "value");
   }
   node.value = inputValue;
 
