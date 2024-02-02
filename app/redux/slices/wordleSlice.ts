@@ -19,7 +19,6 @@ type WordleState = {
   toast: ToastType;
 };
 
-// Define the initial state using that type
 const randomSeed = Wordle.getRandomSeed();
 
 const initialState: WordleState = {
@@ -105,12 +104,17 @@ export const wordleSlice = createSlice({
       const { row, col, value } = action.payload;
       state.emojiCells[row][col] = value;
     },
+    /**
+     * reset the initial state here with a new random seed
+     * @param state
+     * @returns
+     */
     resetState: (state) => {
       const newRandomSeed = Wordle.getRandomSeed();
       const newInitialState = {
         ...initialState,
         randomSeed: newRandomSeed,
-        correctWord: Wordle.getRandomFiveLetterWord(newRandomSeed), // make this a util function
+        correctWord: Wordle.getRandomFiveLetterWord(newRandomSeed),
       };
       return newInitialState;
     },
@@ -118,7 +122,6 @@ export const wordleSlice = createSlice({
       state,
       action: PayloadAction<{ key: string; className: string }>
     ) => {
-      //fixthis
       const { key, className } = action.payload;
       const currStatus = state.keyboardStatus[key];
       if (className === "bg-hit" && currStatus === "bg-perfect") {
@@ -146,8 +149,5 @@ export const {
   setToast,
   resetToast,
 } = wordleSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value
 
 export default wordleSlice.reducer;
