@@ -21,7 +21,7 @@ export default function GameController({
   const gameControllerRef = useRef(null);
 
   const classes = clsx(
-    "h-dvh w-dvh top-0 left-0 bg-black/50 flex items-center justify-center z-20 hidden"
+    "h-dvh top-0 left-0 bg-black/50 flex items-center justify-center z-20 w-full p-8 hidden"
   );
 
   useEffect(() => {
@@ -57,8 +57,8 @@ export default function GameController({
   return (
     <>
       <aside className={classes} ref={gameControllerRef}>
-        <div className="xl:w-1/3 lg:w-1/2 md:w-2/3 w-full h-60  bg-wordle-bg md:rounded-xl border border-white/5 font-roboto flex items-center justify-center flex-col gap-8">
-          <p className="md:text-4xl text-3xl text-white font-bold">
+        <div className="xl:w-1/3 lg:w-1/2 md:w-2/3 w-full h-60 bg-wordle-bg rounded-xl border border-white/5 font-roboto flex items-center justify-center flex-col gap-8">
+          <p className="md:text-4xl text-3xl text-white font-bold tracking-wider">
             Nice one! 🎉
           </p>
           <div className="">
