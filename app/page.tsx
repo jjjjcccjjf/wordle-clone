@@ -63,7 +63,7 @@ export default function Home() {
         <GameControls inputRefs={inputRefs} tryAgain />
       </Nav>
       <main
-        className="h-screen w-screen bg-[#121213] flex flex-col items-center justify-center md:gap-10 gap-2 "
+        className="h-dvh w-dvh bg-wordle-bg flex flex-col items-center justify-center md:gap-10 gap-2 "
         ref={mainRef}
       >
         <section className="grid gap-[5px] mt-[38px] md:mt-0">

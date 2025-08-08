@@ -26,7 +26,7 @@ export default function Toast() {
     <div className={classes}>
       <p
         role="alert"
-        className="bg-white font-[Roboto] p-3 font-bold text-sm rounded-md"
+        className="bg-white font-roboto p-3 font-bold text-sm rounded-md"
       >
         {toast.message}
       </p>

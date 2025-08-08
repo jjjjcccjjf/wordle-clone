@@ -56,7 +56,7 @@ export default function Key({ bigKey, children, inputRefs }: KeyProps) {
   useEffect(() => {}, [keyboardStatus]);
 
   const classes = clsx(
-    "md:w-[43px] w-[25px] h-[58px] flex items-center justify-center font-bold font-[Roboto] rounded-md text-white text-xl",
+            "md:w-[43px] w-[25px] h-[58px] flex items-center justify-center font-bold font-roboto rounded-md text-white text-xl",
     keyboardStatus[trimmedChildren]
       ? keyboardStatus[trimmedChildren]
       : "bg-key-default"

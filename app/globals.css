@@ -2,20 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-key-default {
-  background-color: #818384;
-}
-
-.bg-miss {
-  background-color: #3a3a3c;
-}
-.bg-hit {
-  background-color: #b59f3b;
-}
-.bg-perfect {
-  background-color: #538d4e;
-}
-
 @keyframes scaleAnimation {
   0% {
     transform: scale(1);

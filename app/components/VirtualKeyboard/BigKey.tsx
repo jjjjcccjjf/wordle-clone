@@ -24,7 +24,7 @@ export default function BigKey({ bigKeyType, children, inputRefs }: KeyProps) {
   const currentRow = useSelector((state: RootState) => state.wordle.currentRow);
 
   const classes = clsx(
-    "md:w-[65.41px] w-[38.41px] h-[58px] flex items-center justify-center font-normal font-[Roboto] rounded-md text-white text-[11.5px] bg-key-default"
+            "md:w-[65.41px] w-[38.41px] h-[58px] flex items-center justify-center font-normal font-roboto rounded-md text-white text-[11.5px] bg-key-default"
   );
 
   const regexEmpty = generateRegexFocusOnEmpty(currentRow);

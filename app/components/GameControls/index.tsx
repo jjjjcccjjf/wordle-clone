@@ -90,7 +90,7 @@ export function ShareButton() {
 
   return (
     <button
-      className="md:h-9 h-7 bg-[#538d4e] text-white text-sm md:py-4 lg:px-8 md:px-4 px-3 rounded-full flex items-center justify-center font-bold gap-3 tracking-wide"
+                  className="md:h-9 h-7 bg-perfect text-white text-sm md:py-4 lg:px-8 md:px-4 px-3 rounded-full flex items-center justify-center font-bold gap-3 tracking-wide"
       onClick={handleShareClick}
     >
       Share <BsShare />
